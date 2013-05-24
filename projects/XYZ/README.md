@@ -1,20 +1,22 @@
-README.md
+# project XYZ
 
-# proyecto
-XYZ 
+ 
 
-# hosts
+## hosts
+
+```
 [XYZ]
 golf01.example.com
 golf00.example.com
+```
 
-# instalar requerimientos
+## ansible requirements
+
 ansible XYZ -m raw -a "sudo yum -y install python-simplejson"
 
-# ticket
-ticket nro [123456 Linux VM - Permissions to write](https://tickets.acme.com/issues/123456)
+## project request
 
-
-Recientemente pedi si podian darle acceso a john.doe con los mismos permisos que james.doe... Aparentemente estaba todo ok, puede hacer algunas cosas como subir y bajar apache, pero no tiene permiso de escritura sobre los directorios de apache (/var/www)
-
- Te pido si podemos crear un grupo que sean owners y asignar a los usuarios john.doe y martin.doe
+To provide a set of privileges to a group of users:
+* start,stop,restart the apache daemon
+* copy/delete permissions on the /var/www directory
+* assign those privileges to users: john.doe and martin.doe

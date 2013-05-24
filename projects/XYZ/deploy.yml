@@ -4,15 +4,15 @@
   user: chef
   sudo: yes
   tasks:
-    - name: Crear grupo para modificar archivos
+    - name: Create group for granting permissions
       group: name=devs state=present    
-    #- name: Adicionando usuario john.doe al grupo
+    #- name: Adding user john.doe to group
     #  shell: useradd -G devs john.doe
-    - name: Asignando ownership al directorio web
+    - name: Setting up custom privileges to web directory
       action: file path=/var/www/html/ state=directory group=devs mode=2775 recurse=yes
-    - name: Asignando ownership al directorio de trazas
+    - name: Setting up custom privileges to logs directory
       action: file path=/var/www/html/internallogs state=directory owner=apache mode=2775 recurse=yes
-    #- name: Asignando permissions al directorio web
+    #- name: Setting up custom privileges to web directory
     #  shell: chgrp -R devs /var/www/html/ && find /var/www/html -type d -exec chmod -R 775 {}\;
     #- name: Modifing umask for apache user"
     #  action: copy src=etc/sysconfig/httpd dest=/etc/sysconfig/httpd owner=root group=root mode=0644
