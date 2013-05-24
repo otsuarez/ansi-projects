@@ -1,0 +1,10 @@
+#ProxyRequests Off
+#ProxyPreserveHost On
+<VirtualHost *:80>
+        ServerAdmin root@acme.com
+        ServerName VHOSTNAME.dev.acme.com
+        ErrorLog logs/VHOSTNAME-error.log
+        CustomLog logs/VHOSTNAME-access.log common
+        ProxyPass / ajp://localhost:8009/
+        ProxyPassReverse /  ajp://localhost:8009/
+</VirtualHost>

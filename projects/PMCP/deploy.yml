@@ -1,0 +1,40 @@
+---
+- hosts: papa02.example.com
+  user: chef
+  sudo: yes
+  tasks:
+    - name: Creando directorio de configuracion
+      action: file path=/opt/example/sites/config/vhost.d state=directory
+    - name: Creando directorio de scripts
+      action: file path=/opt/example/sites/bin state=directory
+    - name: Creando directorio de templates
+      action: file path=/opt/example/sites/templates state=directory
+    - name: Copiando template default
+      action: copy src=templates/default dest=/opt/example/sites/templates/default force=no owner=root group=root mode=0644
+    - name: Copiando template tomcat
+      action: copy src=templates/tomcat dest=/opt/example/sites/templates/tomcat force=no owner=root group=root mode=0644   
+    - name: Copiando template drupal
+      action: copy src=templates/drupal dest=/opt/example/sites/templates/drupal force=no owner=root group=root mode=0644   
+    - name: Copiando scripts -- virt-chown.sh
+      action: copy src=bin/virt-chown.sh dest=/opt/example/sites/bin/virt-chown.sh owner=root group=root mode=0755
+    - name: Copiando scripts -- virt-admin.sh
+      action: copy src=bin/virt-admin.sh dest=/opt/example/sites/bin/virt-admin.sh owner=root group=root mode=0755
+    - name: Creando symlinks para los scripts -- virt-admin.sh
+      action: file src=/opt/example/sites/bin/virt-admin.sh dest=/usr/local/bin/virt-admin.sh state=link
+    - name: Creando symlinks para los scripts -- virt-chown.sh
+      action: file src=/opt/example/sites/bin/virt-chown.sh dest=/usr/local/bin/virt-chown.sh state=link
+  # se copian solo si no existen  (force=no)
+    - name: Creando archivo de configuracion -- virtualadmins
+      action: copy src=config/virtualadmins dest=/opt/example/sites/config/virtualadmins force=no owner=luke.doe group=tomcat mode=0644   
+    - name: Copiando la documentacion
+      action: copy src=config/README.md dest=/opt/example/sites/config/README.md owner=root group=root mode=0644
+    - name: instalando el php-devel
+      action: yum name=php53-devel
+    - name: instalando el php-pear
+      action: yum name=php-pear
+    - name: instalando pcre-devel
+      action: yum name=pcre-devel
+    - name: instalando el apc
+      command: yes no | pecl install apc
+    - name: Aplicamos los cambios en el apache
+      service: name=httpd state=reloaded

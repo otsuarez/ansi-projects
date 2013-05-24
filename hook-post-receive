@@ -1,0 +1,39 @@
+#!/bin/sh
+
+IRC_URL="http://server.example.com/irc.php"
+RUNDECK_URL="https://server.example.com/rundeck/"
+
+# Safety check
+if [ -z "$GIT_DIR" ]; then
+    echo "Don't run this script from the command line." >&2
+    exit 1
+fi
+
+tmpdir=/var/tmp/$$.$RANDOM
+mkdir $tmpdir
+
+read oldrev newrev refname
+BRANCH=${refname#refs/heads/} 
+files=`git diff-tree --stat --summary --find-copies-harder $oldrev..$newrev`
+for i in $files
+do
+    echo "$i "
+    case "$i" in
+        projects/*)
+            k=`echo $i | cut -f"2" -d"/" | sed 's/}//'`
+            echo "modifying project $k"
+            curl  -X POST -d 'json={"msg":"modified project: '${k}'","from":"ansi-deploy"}'  ${IRC_URL}
+            playbook="ansible-playbook projects/$k/deploy.yml"
+            cmd="cd ~/ansi-deploy ; pwd ; git pull ;  $playbook"
+            out=`ssh chef@server.example.com $cmd`
+            echo "out: $out"
+            ;;
+        *)
+            # Anything else (is there anything else?)
+            #echo "anything else ... $i"
+            #exit 1
+            ;;
+    esac
+done
+rm -fr $tmpdir
+exit 0

@@ -1,0 +1,3 @@
+Cmnd_Alias   DBACMNDS = /bin/su - postgres,/usr/local/bin/restart-jboss.sh
+User_Alias DBAUSERS = pauldoe
+DBAUSERS        ALL     = (ALL) NOPASSWD: DBACMNDS

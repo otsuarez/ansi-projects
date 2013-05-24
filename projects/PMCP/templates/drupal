@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+        ServerAdmin root@acme.com
+        ServerName VHOSTNAME.dev.acme.com
+        DocumentRoot DOCUMENTROOT/VHOSTNAME/
+        ErrorLog logs/VHOSTNAME-error.log
+        CustomLog logs/VHOSTNAME-access.log common
+	<Directory DOCUMENTROOT/VHOSTNAME/>
+	  Options +FollowSymLinks Indexes
+	  AllowOverride All
+	  order allow,deny
+	  allow from all
+	</Directory>
+</VirtualHost>
