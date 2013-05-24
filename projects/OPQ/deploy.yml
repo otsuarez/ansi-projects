@@ -3,10 +3,10 @@
   user: chef
   sudo: yes
   tasks:
-    - name: Copiando scripts -- restart-jboss.sh
+    - name: Copying scripts -- restart-jboss.sh
       action: copy src=usr/local/bin/restart-jboss.sh dest=/usr/local/bin/restart-jboss.sh owner=root group=root mode=0755
-    - name: Creando archivo de configuracion -- /etc/sudoers.d/dba
+    - name: Creating configuration file -- /etc/sudoers.d/dba
       action: copy src=etc/sudoers.d/dba dest=/etc/sudoers.d/dba mode=0440   
-    #- name: Crear usuario
+    #- name: Create user
     #  user: name=pauldoe comment="Paul Doe"
 

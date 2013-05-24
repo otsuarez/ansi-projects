@@ -14,11 +14,11 @@
       action: file path=/var/www/html/internallogs state=directory owner=apache mode=2775 recurse=yes
     #- name: Asignando permissions al directorio web
     #  shell: chgrp -R devs /var/www/html/ && find /var/www/html -type d -exec chmod -R 775 {}\;
-    #- name: Modificando el umask del apache"
+    #- name: Modifing umask for apache user"
     #  action: copy src=etc/sysconfig/httpd dest=/etc/sysconfig/httpd owner=root group=root mode=0644
-    - name: haciendo publicas las trazas del apache
+    - name: Making public apache log files
       action: file path=/var/log/httpd/ state=directory owner=root group=root mode=0755 
-    - name: Aplicamos los cambios en el apache
+    - name: Applying changes to apache
       service: name=httpd state=reloaded
 
 

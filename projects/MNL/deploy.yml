@@ -4,19 +4,19 @@
   user: chef
   sudo: yes
   tasks:
-    - name: Creando directorio web temporal -- Sitio "content"
+    - name: Creating temp web directory -- Site "content"
       action: file path=/var/www/html/mnl/code/wpp_current/static/media-content/ state=directory owner=apache group=apache mode=2775 
-    - name: Creando directorio web temporal -- Sitio "live"
+    - name: Creating temp web directory -- Site "live"
       action: file path=/var/www/html/mnl/code/wpp_current/static/media/ state=directory owner=apache group=apache mode=2775 
-    - name: Copiando vhost file -- Sitio "content"
+    - name: Copying vhost file -- Site "content"
       action: copy src=etc/httpd/conf.d/content-wpp.conf dest=/etc/httpd/conf.d/content-wpp.conf owner=root group=root mode=0644
-    - name: Copiando vhost file -- Sitio "live"
+    - name: Copying vhost file -- Site "live"
       action: copy src=etc/httpd/conf.d/wpp.conf dest=/etc/httpd/conf.d/wpp.conf owner=root group=root mode=0644
-    - name: Usuario django para el sitio web
+    - name: django user for web site
       user: name=django comment="Django web user" uid=1502 group=apache
-    - name: Modificando el umask del apache"
+    - name: Modifing umask for apache user"
       action: copy src=etc/sysconfig/httpd dest=/etc/sysconfig/httpd owner=root group=root mode=0644
-    - name: haciendo publicas las trazas del apache
+    - name: Making public apache log files
       action: file path=/var/log/httpd/ state=directory owner=root group=root mode=0755 
-    - name: Aplicamos los cambios en el apache
+    - name: Applying changes to apache
       service: name=httpd state=reloaded

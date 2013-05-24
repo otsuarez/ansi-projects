@@ -222,7 +222,7 @@ do
   echo ""
   create_site
         echo ""
-        echo "Sitio creado exitosamente"
+        echo "Site creado exitosamente"
         echo ""
         echo "---------------------------------------------------"
         echo ""
@@ -230,7 +230,7 @@ do
 
   if [ $i = "3" ]
   then
-  echo "Sitios disponibles:"
+  echo "Sites disponibles:"
   ls $ROOT
   echo "Ingrese el nombre del sitio a eliminar:"
   read vhostname
